@@ -1,5 +1,5 @@
 {
-  "name": "aula_16",
+  "name": "projeto2",
   "version": "1.0.0",
   "description": "",
   "main": "dist/app.js",
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
     "express": "^4.19.2",
     "mysql2": "^3.9.7",
