@@ -35,7 +35,7 @@ export class CategoriaService{
         return categoria;
     }
 
-    async filtrarCategoriaById(categoriaData: any): Promise<CategoriaEntity> {
+    async filtrarCategoriaById(categoriaData: any): Promise<CategoriaEntity[]> {
         const idNumber = parseInt(categoriaData, 10);
 
         const categoria =  await this.categoriaRepository.filterCategoriaById(idNumber);

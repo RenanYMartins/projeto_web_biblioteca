@@ -69,13 +69,13 @@ export class CategoriaRepository{
         }
     }
 
-    async filterCategoriaById(id: number) :Promise<CategoriaEntity>{
+    async filterCategoriaById(id: number) :Promise<CategoriaEntity[]>{
         const query = "SELECT * FROM biblioteca.categoria where id = ?" ;
 
         try {
             const resultado = await executarComandoSQL(query, [id]);
             console.log('Categoria localizada com sucesso, ID: ', resultado);
-            return new Promise<CategoriaEntity>((resolve)=>{
+            return new Promise<CategoriaEntity[]>((resolve)=>{
                 resolve(resultado);
             })
         } catch (err:any) {

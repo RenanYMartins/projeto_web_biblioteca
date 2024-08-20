@@ -1,14 +1,22 @@
 import { LivroEntity } from "../model/entity/LivroEntity";
 import { LivroRepository } from "../repository/LivroRepository";
+import { CategoriaRepository } from './../repository/CategoriaRepository';
 
 export class LivroService{
 
     livroRepository: LivroRepository = new LivroRepository();
+    CategoriaRepository: CategoriaRepository = new CategoriaRepository();
 
     async cadastrarLivro(livroData: any): Promise<LivroEntity> {
         const { titulo, autor, categoriaId } = livroData;
         
         const livro = new LivroEntity(undefined, titulo, autor, categoriaId)
+
+        const categoria = await this.CategoriaRepository.filterCategoriaById(categoriaId);
+
+        if(categoria.length == 0){
+            throw new Error("Erro. Categoria não encontrada");
+        }
 
         const novoLivro =  await this.livroRepository.insertLivro(livro);
         console.log("Service - Insert ", novoLivro);

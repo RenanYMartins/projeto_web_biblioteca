@@ -40,7 +40,7 @@ export class UsuarioRepository{
     }
 
     async updateUsuario(usuario:UsuarioEntity) :Promise<UsuarioEntity>{
-        const query = "UPDATE biblioteca.usuario set idPessoa = ?, senha = ?;" ;
+        const query = "UPDATE biblioteca.usuario set idPessoa = ? AND senha = ?;" ;
 
         try {
             const resultado = await executarComandoSQL(query, [usuario.idPessoa, usuario.senha]);
@@ -55,10 +55,10 @@ export class UsuarioRepository{
     }
 
     async deleteUsuario(usuario:UsuarioEntity) :Promise<UsuarioEntity>{
-        const query = "DELETE FROM biblioteca.usuario where id = ?;" ;
+        const query = "DELETE FROM biblioteca.usuario where id = ? AND idPessoa = ?;" ;
 
         try {
-            const resultado = await executarComandoSQL(query, [usuario.id]);
+            const resultado = await executarComandoSQL(query, [usuario.id, usuario.idPessoa]);
             console.log('Usuário deletado com sucesso: ', usuario);
             return new Promise<UsuarioEntity>((resolve)=>{
                 resolve(usuario);

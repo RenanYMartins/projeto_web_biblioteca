@@ -35,7 +35,7 @@ export class PessoaService{
         return pessoa;
     }
 
-    async filtrarPessoaById(pessoaData: any): Promise<PessoaEntity> {
+    async filtrarPessoaById(pessoaData: any): Promise<PessoaEntity[]> {
         const idNumber = parseInt(pessoaData, 10);
 
         const pessoa =  await this.pessoaRepository.filterPessoaById(idNumber);

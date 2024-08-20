@@ -6,15 +6,15 @@ export class UsuarioEntity {
     senha: string;
 
     constructor(id?: number, idPessoa?: number, senha?: string) {
-        this.validatesInformation(idPessoa, senha);
+        this.validatesInformation(idPessoa);
         this.id = id || 0;
         this.idPessoa = idPessoa || 0;
         this.senha = senha || '';
     }
 
-    private validatesInformation(idPessoa: any, senha: any) {
+    private validatesInformation(idPessoa: any) {
         let error = '';
-        if (typeof idPessoa !== 'number' || typeof senha !== 'string') {
+        if (typeof idPessoa !== 'number') {
             error += ("Informações incompletas ou incorretas. ");
         }
 

@@ -69,13 +69,13 @@ export class PessoaRepository{
         }
     }
 
-    async filterPessoaById(id: number) :Promise<PessoaEntity>{
+    async filterPessoaById(id: number) :Promise<PessoaEntity[]>{
         const query = "SELECT * FROM biblioteca.pessoa where id = ?" ;
 
         try {
-            const resultado = await executarComandoSQL(query, [id]);
+            const resultado:PessoaEntity[] = await executarComandoSQL(query, [id]);
             console.log('Pessoa localizado com sucesso, ID: ', resultado);
-            return new Promise<PessoaEntity>((resolve)=>{
+            return new Promise<PessoaEntity[]>((resolve)=>{
                 resolve(resultado);
             })
         } catch (err:any) {

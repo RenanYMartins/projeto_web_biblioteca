@@ -14,8 +14,9 @@ export class UsuarioService{
         const usuario = new UsuarioEntity(undefined, idPessoa, senha);
 
         const pessoa = await this.PessoaRepository.filterPessoaById(idPessoa);
+        console.log('idPessoa', idPessoa);
 
-        if(pessoa == null){
+        if(pessoa.length == 0){
             throw new Error("Pessoa não encontrada com o id fornecido");
             
         }
@@ -38,9 +39,9 @@ export class UsuarioService{
     }
 
     async deletarUsuario(usuarioData: any): Promise<UsuarioEntity> {
-        const { id, idpessoa, senha } = usuarioData;
+        const { id, idPessoa } = usuarioData;
 
-        const usuario = new UsuarioEntity(id, idpessoa, senha);
+        const usuario = new UsuarioEntity(id, idPessoa);
 
         await this.usuarioRepository.deleteUsuario(usuario);
         console.log("Service - Delete ", usuario);
