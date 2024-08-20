@@ -3,7 +3,7 @@ import { CategoriaRepository } from "../repository/CategoriaRepository";
 
 export class CategoriaService{
 
-    categoriaRepository: CategoriaRepository = new CategoriaRepository();
+    categoriaRepository: CategoriaRepository = CategoriaRepository.getInstance();
 
     async cadastrarCategoria(categoriaData: any): Promise<CategoriaEntity> {
         const { nome } = categoriaData;

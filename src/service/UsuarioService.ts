@@ -14,7 +14,6 @@ export class UsuarioService{
         const usuario = new UsuarioEntity(undefined, idPessoa, senha);
 
         const pessoa = await this.PessoaRepository.filterPessoaById(idPessoa);
-        console.log('idPessoa', idPessoa);
 
         if(pessoa.length == 0){
             throw new Error("Pessoa não encontrada com o id fornecido");
@@ -48,7 +47,7 @@ export class UsuarioService{
         return usuario;
     }
 
-    async filtrarUsuarioById(usuarioData: any): Promise<UsuarioEntity> {
+    async filtrarUsuarioById(usuarioData: any): Promise<UsuarioEntity[]> {
         const idNumber = parseInt(usuarioData, 10);
 
         const usuario =  await this.usuarioRepository.filterUsuarioById(idNumber);

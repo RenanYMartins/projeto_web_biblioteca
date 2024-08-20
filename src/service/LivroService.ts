@@ -5,7 +5,7 @@ import { CategoriaRepository } from './../repository/CategoriaRepository';
 export class LivroService{
 
     livroRepository: LivroRepository = new LivroRepository();
-    CategoriaRepository: CategoriaRepository = new CategoriaRepository();
+    CategoriaRepository: CategoriaRepository = CategoriaRepository.getInstance();
 
     async cadastrarLivro(livroData: any): Promise<LivroEntity> {
         const { titulo, autor, categoriaId } = livroData;
@@ -43,7 +43,7 @@ export class LivroService{
         return livro;
     }
 
-    async filtrarLivroById(livroData: any): Promise<LivroEntity> {
+    async filtrarLivroById(livroData: any): Promise<LivroEntity[]> {
         const idNumber = parseInt(livroData, 10);
 
         const livro =  await this.livroRepository.filterLivroById(idNumber);

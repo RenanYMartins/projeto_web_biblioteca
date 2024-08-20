@@ -1,14 +1,29 @@
+import { LivroRepository } from './../repository/LivroRepository';
+import { UsuarioRepository } from './../repository/UsuarioRepository';
 import { EmprestimoEntity } from "../model/entity/EmprestimoEntity";
 import { EmprestimoRepository } from "../repository/EmprestimoRepository";
 
 export class EmprestimoService{
 
     emprestimoRepository: EmprestimoRepository = new EmprestimoRepository();
+    usuarioRepository: UsuarioRepository = new UsuarioRepository();
+    livroRepository: LivroRepository = new LivroRepository();
 
     async cadastrarEmprestimo(emprestimoData: any): Promise<EmprestimoEntity> {
         const { livroId, usuarioId, dataEmprestimo, dataDevolucao } = emprestimoData;
         
         const emprestimo = new EmprestimoEntity(undefined, livroId, usuarioId, dataEmprestimo, dataDevolucao);
+
+        const usuario = await this.usuarioRepository.filterUsuarioById(usuarioId);
+
+        const livro = await this.livroRepository.filterLivroById(livroId);
+
+        console.log(usuario);
+        console.log(livro);
+
+        if(usuario.length == 0 || livro.length == 0){
+            throw new Error("Usuário e/ou livro não existe");
+        }
 
         const novoEmprestimo =  await this.emprestimoRepository.insertEmprestimo(emprestimo);
         console.log("Service - Insert ", novoEmprestimo);

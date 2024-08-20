@@ -4,8 +4,18 @@ import { CategoriaEntity } from "../model/entity/CategoriaEntity";
 
 export class CategoriaRepository{
 
-    constructor(){
+    private static instance: CategoriaRepository;
+
+    private constructor(){
         this.createTable();
+    }
+
+    public static getInstance():CategoriaRepository{
+        if(!CategoriaRepository.instance){
+            CategoriaRepository.instance = new CategoriaRepository();
+        }
+
+        return CategoriaRepository.instance;
     }
 
     private async createTable() {
