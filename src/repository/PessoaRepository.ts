@@ -3,8 +3,18 @@ import { PessoaEntity } from './../model/entity/PessoaEntity';
 
 export class PessoaRepository{
 
-    constructor(){
+    private static instance: PessoaRepository;
+
+    private constructor(){
         this.createTable();
+    }
+
+    public static getInstance():PessoaRepository{
+        if(!PessoaRepository.instance){
+            PessoaRepository.instance = new PessoaRepository();
+        }
+
+        return PessoaRepository.instance;
     }
 
     private async createTable() {

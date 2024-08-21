@@ -5,8 +5,8 @@ import { UsuarioRepository } from "../repository/UsuarioRepository";
 
 export class UsuarioService{
 
-    usuarioRepository: UsuarioRepository = new UsuarioRepository();
-    PessoaRepository: PessoaRepository = new PessoaRepository();
+    usuarioRepository: UsuarioRepository = UsuarioRepository.getInstance();
+    PessoaRepository: PessoaRepository = PessoaRepository.getInstance();
 
     async cadastrarUsuario(usuarioData: any): Promise<UsuarioEntity> {
         const { idPessoa, senha } = usuarioData;
@@ -20,17 +20,22 @@ export class UsuarioService{
             
         }
         
-        console.log("Pessoa: ", pessoa);
-
         const novoUsuario =  await this.usuarioRepository.insertUsuario(usuario);
         console.log("Service - Insert ", novoUsuario);
         return novoUsuario;
     }
 
     async atualizarUsuario(usuarioData: any): Promise<UsuarioEntity> {
-        const { id, idpessoa, senha } = usuarioData;
+        const { id, idPessoa, senha } = usuarioData;
 
-        const usuario = new UsuarioEntity(id, idpessoa, senha);
+        const usuario = new UsuarioEntity(id, idPessoa, senha);
+
+        const pessoa = await this.PessoaRepository.filterPessoaById(idPessoa);
+
+        if(pessoa.length == 0){
+            throw new Error("Pessoa não encontrada com o id fornecido");
+            
+        }
 
         await this.usuarioRepository.updateUsuario(usuario);
         console.log("Service - Update ", usuario);

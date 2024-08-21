@@ -3,7 +3,7 @@ import { PessoaRepository } from "../repository/PessoaRepository";
 
 export class PessoaService{
 
-    pessoaRepository: PessoaRepository = new PessoaRepository();
+    pessoaRepository: PessoaRepository = PessoaRepository.getInstance();
 
     async cadastrarPessoa(pessoaData: any): Promise<PessoaEntity> {
         const { nome, email } = pessoaData;

@@ -3,8 +3,18 @@ import { UsuarioEntity } from './../model/entity/UsuarioEntity';
 
 export class UsuarioRepository{
 
-    constructor(){
+    private static instance: UsuarioRepository;
+
+    private constructor(){
         this.createTable();
+    }
+
+    public static getInstance():UsuarioRepository{
+        if(!UsuarioRepository.instance){
+            UsuarioRepository.instance = new UsuarioRepository();
+        }
+
+        return UsuarioRepository.instance;
     }
 
     private async createTable() {

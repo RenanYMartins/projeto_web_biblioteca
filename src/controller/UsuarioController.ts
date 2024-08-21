@@ -32,7 +32,7 @@ export class UsuarioController extends Controller {
     ): Promise<void> {
         try {
             const usuario = await this.usuarioService.atualizarUsuario(dto);
-            return success(200, new BasicResponseDto("Usuario atualizado com sucesso!", usuario));
+            return success(200, new BasicResponseDto("Usuário atualizado com sucesso!", usuario));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }
@@ -46,7 +46,7 @@ export class UsuarioController extends Controller {
     ): Promise<void> {
         try {
             const usuario = await this.usuarioService.deletarUsuario(dto);
-            return success(200, new BasicResponseDto("Usuario deletado com sucesso!", usuario));
+            return success(200, new BasicResponseDto("Usuário deletado com sucesso!", usuario));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }
@@ -60,25 +60,11 @@ export class UsuarioController extends Controller {
     ): Promise<void> {
         try {
             const usuario = await this.usuarioService.filtrarUsuarioById(id);
-            return success(200, new BasicResponseDto("Usuario encontrado!", usuario));
+            return success(200, new BasicResponseDto("Usuário encontrado!", usuario));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }
     }
-
-    // @Get()
-    // async filtrarUsuarioPorNome(
-    //     @Query() name: string,
-    //     @Res() notFound: TsoaResponse<400, BasicResponseDto>,
-    //     @Res() success: TsoaResponse<200, BasicResponseDto>
-    // ): Promise<void> {
-    //     try {
-    //         const usuario: UsuarioEntity[] = await this.usuarioService.filtrarUsuarioByNome(name);
-    //         return success(200, new BasicResponseDto("Usuario encontrado!", usuario));
-    //     } catch (error: any) {
-    //         return notFound(400, new BasicResponseDto(error.message, undefined));
-    //     }
-    // }
 
     @Get("all")
     async listarTodosUsuarios(

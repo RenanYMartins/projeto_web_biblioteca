@@ -18,7 +18,7 @@ export class EmprestimoController extends Controller {
     ): Promise<void> {
         try {
             const emprestimo = await this.emprestimoService.cadastrarEmprestimo(dto);
-            return success(201, new BasicResponseDto("Emprestimo criada com sucesso!", emprestimo));
+            return success(201, new BasicResponseDto("Emprestimo criado com sucesso!", emprestimo));
         } catch (error: any) {
             return fail(400, new BasicResponseDto(error.message, undefined));
         }
@@ -32,7 +32,7 @@ export class EmprestimoController extends Controller {
     ): Promise<void> {
         try {
             const emprestimo = await this.emprestimoService.atualizarEmprestimo(dto);
-            return success(200, new BasicResponseDto("Emprestimo atualizada com sucesso!", emprestimo));
+            return success(200, new BasicResponseDto("Emprestimo atualizado com sucesso!", emprestimo));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }
@@ -46,7 +46,7 @@ export class EmprestimoController extends Controller {
     ): Promise<void> {
         try {
             const emprestimo = await this.emprestimoService.deletarEmprestimo(dto);
-            return success(200, new BasicResponseDto("Emprestimo deletada com sucesso!", emprestimo));
+            return success(200, new BasicResponseDto("Emprestimo deletado com sucesso!", emprestimo));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }
@@ -60,7 +60,7 @@ export class EmprestimoController extends Controller {
     ): Promise<void> {
         try {
             const emprestimo = await this.emprestimoService.filtrarEmprestimoById(id);
-            return success(200, new BasicResponseDto("Emprestimo encontrada!", emprestimo));
+            return success(200, new BasicResponseDto("Emprestimo encontrado!", emprestimo));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }
@@ -73,7 +73,7 @@ export class EmprestimoController extends Controller {
     ): Promise<void> {
         try {
             const emprestimos: EmprestimoEntity[] = await this.emprestimoService.listarTodasEmprestimos();
-            return success(200, new BasicResponseDto("Emprestimos listadas com sucesso!", emprestimos));
+            return success(200, new BasicResponseDto("Emprestimos listados com sucesso!", emprestimos));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }

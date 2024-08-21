@@ -4,7 +4,7 @@ import { CategoriaRepository } from './../repository/CategoriaRepository';
 
 export class LivroService{
 
-    livroRepository: LivroRepository = new LivroRepository();
+    livroRepository: LivroRepository = LivroRepository.getInstance();
     CategoriaRepository: CategoriaRepository = CategoriaRepository.getInstance();
 
     async cadastrarLivro(livroData: any): Promise<LivroEntity> {
@@ -28,6 +28,12 @@ export class LivroService{
 
         const livro = new LivroEntity(id, titulo, autor, categoriaId);
 
+        const categoria = await this.CategoriaRepository.filterCategoriaById(categoriaId);
+
+        if(categoria.length == 0){
+            throw new Error("Erro. Categoria não encontrada");
+        }
+
         await this.livroRepository.updateLivro(livro);
         console.log("Service - Update ", livro);
         return livro;
@@ -47,6 +53,14 @@ export class LivroService{
         const idNumber = parseInt(livroData, 10);
 
         const livro =  await this.livroRepository.filterLivroById(idNumber);
+        console.log("Service - Filtrar", livro);
+        return livro;
+    }
+
+    async filtrarLivroByCategory(livroData: any): Promise<LivroEntity[]> {
+        const categoriaId = parseInt(livroData, 10);
+
+        const livro =  await this.livroRepository.filterLivroByCategory(categoriaId);
         console.log("Service - Filtrar", livro);
         return livro;
     }

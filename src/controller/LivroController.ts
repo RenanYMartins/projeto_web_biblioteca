@@ -74,7 +74,7 @@ export class LivroController extends Controller {
     ): Promise<void> {
         try {
             const livro: LivroEntity[] = await this.livroService.filtrarLivroByNome(nome);
-            return success(200, new BasicResponseDto("Livro encontrada!", livro));
+            return success(200, new BasicResponseDto("Livro encontrado!", livro));
         } catch (error: any) {
             return notFound(400, new BasicResponseDto(error.message, undefined));
         }

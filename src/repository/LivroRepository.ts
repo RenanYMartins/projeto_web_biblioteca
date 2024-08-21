@@ -1,11 +1,20 @@
 import { executarComandoSQL } from "../database/mysql";
 import { LivroEntity } from "../model/entity/LivroEntity";
 
-
 export class LivroRepository{
 
-    constructor(){
+    private static instance: LivroRepository;
+
+    private constructor(){
         this.createTable();
+    }
+
+    public static getInstance():LivroRepository{
+        if(!LivroRepository.instance){
+            LivroRepository.instance = new LivroRepository();
+        }
+
+        return LivroRepository.instance;
     }
 
     private async createTable() {
@@ -87,7 +96,7 @@ export class LivroRepository{
     }
 
     async filterLivroByNome(nome: string) :Promise<LivroEntity[]>{
-        const query = "SELECT * FROM biblioteca.livro where nome = ?" ;
+        const query = "SELECT * FROM biblioteca.livro where titulo = ?" ;
 
         try {
             const resultado:LivroEntity[] = await executarComandoSQL(query, [nome]);
@@ -97,6 +106,21 @@ export class LivroRepository{
             })
         } catch (err:any) {
             console.error(`Falha ao procurar o livro ${nome} gerando o erro: ${err}`);
+            throw err;
+        }
+    }
+
+    async filterLivroByCategory(categoriaId: number) :Promise<LivroEntity[]>{
+        const query = "SELECT * FROM biblioteca.livro where categoriaId = ?" ;
+
+        try {
+            const resultado:LivroEntity[] = await executarComandoSQL(query, [categoriaId]);
+            console.log('Livro localizado com sucesso, id categoria: ', resultado);
+            return new Promise<LivroEntity[]>((resolve)=>{
+                resolve(resultado);
+            })
+        } catch (err:any) {
+            console.error(`Falha ao procurar o livro ${categoriaId} gerando o erro: ${err}`);
             throw err;
         }
     }

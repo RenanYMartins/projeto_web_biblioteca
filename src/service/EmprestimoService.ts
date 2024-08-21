@@ -5,9 +5,9 @@ import { EmprestimoRepository } from "../repository/EmprestimoRepository";
 
 export class EmprestimoService{
 
-    emprestimoRepository: EmprestimoRepository = new EmprestimoRepository();
-    usuarioRepository: UsuarioRepository = new UsuarioRepository();
-    livroRepository: LivroRepository = new LivroRepository();
+    emprestimoRepository: EmprestimoRepository = EmprestimoRepository.getInstance();
+    usuarioRepository: UsuarioRepository = UsuarioRepository.getInstance();
+    livroRepository: LivroRepository = LivroRepository.getInstance();
 
     async cadastrarEmprestimo(emprestimoData: any): Promise<EmprestimoEntity> {
         const { livroId, usuarioId, dataEmprestimo, dataDevolucao } = emprestimoData;
@@ -17,9 +17,6 @@ export class EmprestimoService{
         const usuario = await this.usuarioRepository.filterUsuarioById(usuarioId);
 
         const livro = await this.livroRepository.filterLivroById(livroId);
-
-        console.log(usuario);
-        console.log(livro);
 
         if(usuario.length == 0 || livro.length == 0){
             throw new Error("Usuário e/ou livro não existe");
@@ -44,6 +41,7 @@ export class EmprestimoService{
         const { id, livroId, usuarioId, dataEmprestimo, dataDevolucao } = emprestimoData;
 
         const emprestimo = new EmprestimoEntity(id, livroId, usuarioId, dataEmprestimo, dataDevolucao);
+
 
         await this.emprestimoRepository.deleteEmprestimo(emprestimo);
         console.log("Service - Delete ", emprestimo);

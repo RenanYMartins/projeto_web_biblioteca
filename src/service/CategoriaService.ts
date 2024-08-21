@@ -1,9 +1,11 @@
+import { LivroRepository } from './../repository/LivroRepository';
 import { CategoriaEntity } from "../model/entity/CategoriaEntity";
 import { CategoriaRepository } from "../repository/CategoriaRepository";
 
 export class CategoriaService{
 
     categoriaRepository: CategoriaRepository = CategoriaRepository.getInstance();
+    LivroRepository: LivroRepository = LivroRepository.getInstance();
 
     async cadastrarCategoria(categoriaData: any): Promise<CategoriaEntity> {
         const { nome } = categoriaData;
@@ -28,7 +30,13 @@ export class CategoriaService{
     async deletarCategoria(categoriaData: any): Promise<CategoriaEntity> {
         const { id, nome } = categoriaData;
 
-        const categoria = new CategoriaEntity(id, nome)
+        const categoria = new CategoriaEntity(id, nome);
+        
+        const livro = await this.LivroRepository.filterLivroByCategory(categoria.id);
+
+        if(livro.length > 0){
+            throw new Error("Erro. Há livros cadastrados com essa categoria");
+        }
 
         await this.categoriaRepository.deleteCategoria(categoria);
         console.log("Service - Delete ", categoria);
